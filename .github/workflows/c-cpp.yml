@@ -27,7 +27,7 @@ jobs:
 
         # Test Case 1
         echo -e "3\n0 5\n1 3\n2 8" | ./fcfs > outputs/test1_output.txt
-        cat <<EOT > outputs/test1_expected.txt
+        cat > outputs/test1_expected.txt << 'EOT'
 Enter the number of processes: 
 Enter arrival and burst time for process 0: 
 Enter arrival and burst time for process 1: 
@@ -49,7 +49,7 @@ EOT
 
         # Test Case 2
         echo -e "2\n0 10\n5 5" | ./fcfs > outputs/test2_output.txt
-        cat <<EOT > outputs/test2_expected.txt
+        cat > outputs/test2_expected.txt << 'EOT'
 Enter the number of processes: 
 Enter arrival and burst time for process 0: 
 Enter arrival and burst time for process 1: 
@@ -67,6 +67,7 @@ Average Turnaround Time: 10.00
 EOT
         diff outputs/test2_output.txt outputs/test2_expected.txt || echo "Test 2 Failed" >> outputs/failures.txt
 
+        # Report failure if any test failed
         if [ -f outputs/failures.txt ]; then
           echo "Some tests failed. Check the output artifacts for details."
           cat outputs/failures.txt
@@ -74,7 +75,7 @@ EOT
         fi
 
     - name: Upload Outputs as Artifacts
-      if: failure() # Upload only if tests fail reached end bro
+      if: failure() # Upload only if tests fail
       uses: actions/upload-artifact@v4
       with:
         name: fcfs-test-failures
