@@ -1,0 +1,25 @@
+name: C/C++ CI
+
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v4
+
+    - name: Install dependencies
+      run: sudo apt-get update && sudo apt-get install -y build-essential
+
+    - name: Compile C program
+      run: gcc fcfs.c -o fcfs -Wall -Wextra -Werror
+
+    - name: Run FCFS program (sample input test)
+      run: echo -e "3\n0 5\n1 3\n2 8" | ./fcfs
